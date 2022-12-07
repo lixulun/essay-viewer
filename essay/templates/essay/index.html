@@ -1,0 +1,19 @@
+{% extends "essay/base.html" %} 
+
+{% block title %} 随笔 {% endblock title %}
+
+{% block content %}
+{% for essay in essays %}
+    <section>
+        <h2>
+            <a href="{% url 'essay:detail' essay.identity %}">{{ essay.title }}</a>
+            {% for tag in essay.tags %}
+            <span style="margin-left: 4px; padding: 4px; font-size: 12px; font-weight: normal; background-color: #e6e6e6; border-radius: 8px;">{{tag}}</span>
+            {% endfor %}
+        </h2>
+        <p></p>
+        <p><i>{{ essay.publish_date|date }}</i></p>
+        <p style="color: gray;">{{ essay.content|truncatechars:100 }}...</p>
+    </section>
+{% endfor %}
+{% endblock %}

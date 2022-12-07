@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{% block title %}essey{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" />
+		<style>
+			.content {
+				padding: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pure-g">
+			<div class="pure-u-1-8 pure-u-md-1-4"></div>
+			<div class="pure-u-3-4 pure-u-md-1-2">
+				<div class="pure-g">
+					<div class="pure-u-1">
+						<div class="pure-menu pure-menu-horizontal">
+							<a href="{% url 'essay:index' %}" class="pure-menu-heading pure-menu-link">随笔</a>
+							<ul class="pure-menu-list">
+								<li class="pure-menu-item">
+									<a href="{% url 'essay:index' %}" class="pure-menu-link">首页</a>
+								</li>
+								<li class="pure-menu-item">
+									<a href="{% url 'account_logout' %}" class="pure-menu-link">退出</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="content">
+					{% block content %}空白页面{% endblock content %}
+				</div>
+			</div>
+			<div class="pure-u-1-8 pure-u-md-1-4"></div>
+		</div>
+	</body>
+</html>

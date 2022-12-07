@@ -1,0 +1,20 @@
+{% extends "essay/base.html" %} 
+
+{% block title %} {{ essay.title }} | 随笔 {% endblock title %}
+
+{% block content %}
+    <h1>{{ essay.title }}</h1>
+    <p>
+    {% for tag in essay.tags %}
+    <span style="margin-left: 4px; padding: 4px 8px; font-size: 14px; font-weight: normal; background-color: #e6e6e6; border-radius: 8px;">{{tag}}</span>
+    {% endfor %}
+    </p>
+    <p><b>{{ essay.publish_date|date }}</b></p>
+    {{formatted_content|safe}}
+    <style>
+        p {
+            margin-bottom: 28px;
+        }
+    </style>
+{% endblock content %}
+

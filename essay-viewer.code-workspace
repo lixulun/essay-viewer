@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"python.linting.flake8Enabled": true,
+		"files.associations": {
+			"*.html": "django-html"
+		}
+	}
+}
