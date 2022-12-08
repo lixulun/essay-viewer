@@ -29,7 +29,24 @@ SECRET_KEY = "django-insecure-*$no%zrj!^k%o(g2_u^2x9d-)o*^@kheh5t1czy$xz^v7+=%or
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+# FORCE_SCRIPT_NAME 有局限性，实际使用时有各种各样的问题，这个作用是相同的
+URL_PREFIX = ""
+
+SESSION_COOKIE_NAME = "essay_viewer_sessionid"
+SESSION_COOKIE_PATH = (
+    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
+)
+
+CSRF_COOKIE_NAME = "essay_viewer_csrftoken"
+CSRF_COOKIE_PATH = (
+    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
+)
+
+LOGIN_REDIRECT_URL = "root"
+LOGIN_URL = "account_login"
+LOGOUT_REDIRECT_URL = "root"
 
 
 # Application definition
@@ -51,6 +68,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -126,7 +144,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = "static"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -138,7 +157,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CONSOLE_LOGGING_FORMAT = (
     "%(hostname)s %(asctime)s %(levelname)-8s %(name)s.%(funcName)s: %(message)s"
 )
-CONSOLE_LOGGING_FILE_LOCATION = "django-wrds.log"
+CONSOLE_LOGGING_FILE_LOCATION = BASE_DIR / "logs" / "django.log"
 
 LOGGING = {
     "version": 1,
@@ -180,8 +199,8 @@ LOGGING = {
             "mode": "a",
             "encoding": "utf-8",
             "formatter": "my_formatter",
-            "backupCount": 5,
-            "maxBytes": 10485760,
+            "backupCount": 30,
+            "maxBytes": 10485760,  # 10MB
         },
     },
     "loggers": {

@@ -1,5 +1,7 @@
 __pycache__
 .venv
-django-wrds.log*
-/static/*
-!/static/.gitkeep
+/logs/*
+!/logs/.gitkeep
+/staticfiles/*
+!/staticfiles/.gitkeep
+db.sqlite3

@@ -11,6 +11,12 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "essay_viewer.settings")
+setting_suffix = ""
+env = os.getenv("ENV")
+if env:
+    setting_suffix = "_" + env
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE", "essay_viewer.settings" + setting_suffix
+)
 
 application = get_asgi_application()
