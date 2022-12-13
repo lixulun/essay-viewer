@@ -15,6 +15,7 @@ import os
 import os.path
 import sys
 from pathlib import Path
+from essay_viewer.settings_utils import with_url_prefix
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,22 +28,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*$no%zrj!^k%o(g2_u^2x9d-)o*^@kheh5t1czy$xz^v7+=%or"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
 # FORCE_SCRIPT_NAME 有局限性，实际使用时有各种各样的问题，这个作用是相同的
-URL_PREFIX = ""
+URL_PREFIX = "abc"
 
 SESSION_COOKIE_NAME = "essay_viewer_sessionid"
-SESSION_COOKIE_PATH = (
-    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
-)
+SESSION_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
 
 CSRF_COOKIE_NAME = "essay_viewer_csrftoken"
-CSRF_COOKIE_PATH = (
-    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
-)
+CSRF_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
 
 LOGIN_REDIRECT_URL = "root"
 LOGIN_URL = "account_login"
@@ -143,7 +140,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = with_url_prefix(URL_PREFIX, "static/")
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

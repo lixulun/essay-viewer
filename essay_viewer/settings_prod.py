@@ -1,4 +1,5 @@
 from essay_viewer.settings import *  # noqa: F401,F403
+from essay_viewer.settings_utils import with_url_prefix
 
 DEBUG = False
 
@@ -9,11 +10,9 @@ ALLOWED_HOSTS = ["coffeepi.top"]
 URL_PREFIX = "essay-viewer"
 
 SESSION_COOKIE_NAME = "essay_viewer_sessionid"
-SESSION_COOKIE_PATH = (
-    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
-)
+SESSION_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
 
 CSRF_COOKIE_NAME = "essay_viewer_csrftoken"
-CSRF_COOKIE_PATH = (
-    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
-)
+CSRF_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
+
+STATIC_URL = with_url_prefix(URL_PREFIX, "static/")
