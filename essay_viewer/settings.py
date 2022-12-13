@@ -45,6 +45,9 @@ LOGIN_REDIRECT_URL = "root"
 LOGIN_URL = "account_login"
 LOGOUT_REDIRECT_URL = "root"
 
+# allauth 设置默认记住用户名，和 Django 的 session 策略保持相同
+ACCOUNT_SESSION_REMEMBER = True
+
 
 # Application definition
 
