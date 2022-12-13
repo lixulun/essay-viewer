@@ -28,12 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*$no%zrj!^k%o(g2_u^2x9d-)o*^@kheh5t1czy$xz^v7+=%or"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
 # FORCE_SCRIPT_NAME 有局限性，实际使用时有各种各样的问题，这个作用是相同的
-URL_PREFIX = "abc"
+URL_PREFIX = ""
 
 SESSION_COOKIE_NAME = "essay_viewer_sessionid"
 SESSION_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
