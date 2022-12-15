@@ -29,6 +29,7 @@ def _prefixed(pattern):
 
 
 urlpatterns = [
+    path("", lambda r: redirect("root")),
     path(_prefixed(""), lambda r: redirect("essay:index"), name="root"),
     path(_prefixed("accounts/"), include("allauth.urls")),
     path(_prefixed("admin/"), admin.site.urls),
