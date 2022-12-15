@@ -179,7 +179,7 @@ INSTALLED_APPS = [
 # urls.py
 
 urlpatterns = [
-    path(accounts/, include("allauth.urls")),
+    path("accounts/", include("allauth.urls")),
     ...
 ]
 ```
@@ -243,19 +243,26 @@ https://coffeepi.top/essay-viewer/essay/050b4a71-6389-49cb-9f68-42dee20374bc/
 
 ```
 # settings.py
+...
 URL_PREFIX = ""
 
 SESSION_COOKIE_NAME = "essay_viewer_sessionid"
-SESSION_COOKIE_PATH = (
-    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
-)
+SESSION_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
 
 CSRF_COOKIE_NAME = "essay_viewer_csrftoken"
-CSRF_COOKIE_PATH = (
-    "/" if (not URL_PREFIX) or URL_PREFIX == "/" else "/" + URL_PREFIX.strip("/") + "/"
-)
+CSRF_COOKIE_PATH = with_url_prefix(URL_PREFIX, "")
+
+LOGIN_REDIRECT_URL = "root"
+LOGIN_URL = "account_login"
+LOGOUT_REDIRECT_URL = "root"
+
+...
+
+STATIC_URL = with_url_prefix(URL_PREFIX, "static/")
+...
 
 # urls.py
+...
 def _prefixed(pattern):
     if not settings.URL_PREFIX or settings.URL_PREFIX.strip() == "/":
         return pattern
@@ -266,6 +273,7 @@ def _prefixed(pattern):
 
 
 urlpatterns = [
+    path("", lambda r: redirect("root")),
     path(_prefixed(""), lambda r: redirect("essay:index"), name="root"),
     path(_prefixed("accounts/"), include("allauth.urls")),
     path(_prefixed("admin/"), admin.site.urls),
